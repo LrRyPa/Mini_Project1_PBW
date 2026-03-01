@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta nama="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio - Vue Version</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">{{ portofolio }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#certificates">Certificates</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section d-flex align-items-center text-white">
+        <div class="overlay"></div>
+        <div class="container text-center position-relative">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <img :src="profileImage"
+                        class="profile-img mb-4"
+                        width="160"
+                        alt="Foto Profil">
+                    <h1 class="fw-bold display-4 mb-3">
+                        Halo, Saya <br>{{ nama }}
+                    </h1>
+                    <p class="lead mb-4">
+                        {{ tagline }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-white">About Me</h2>
+                <p class="text-light opacity-75">
+                    {{ deskripsi }}
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100">
+                        <h4 class="mb-4 text-white">Skills</h4>
+                        <div v-for="skill in skills" :key="skill.nama" class="mb-4">
+                            <div class="d-flex justify-content-between text-light">
+                                <span>{{ skill.nama }}</span>
+                                <span>{{ skill.level }}%</span>
+                            </div>
+                            <div class="modern-progress">
+                                <div class="modern-progress-bar"
+                                    :style="{ width: skill.level + '%' }">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100">
+                        <h4 class="mb-4 text-white">Experiences</h4>
+                        <ul class="text-light">
+                            <li v-for="exp in experiences" :key="exp" class="mb-3">
+                                {{ exp }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates" class="cert-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-white">Certificates</h2>
+                <p class="text-light opacity-75">
+                    Beberapa pelatihan dan sertifikasi yang telah saya selesaikan.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4"
+                    v-for="cert in certificates"
+                    :key="cert.title">
+                    <div class="modern-card h-100">
+                        <div class="card-img-wrapper">
+                            <img :src="cert.image" alt="Certificate">
+                            <div class="img-overlay"></div>
+                        </div>
+                        <div class="card-content p-4">
+                            <h5 class="text-white mb-2">
+                                {{ cert.title }}
+                            </h5>
+                            <p class="text-light opacity-75">
+                                {{ cert.description }}
+                            </p>
+                            <a :href="cert.link"
+                                class="modern-btn mt-3">
+                                Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+    data() {
+        return {
+            portofolio: "Larry",
+            nama: "Larry Polin Anugrah",
+            profileImage: "assets/profil.jpeg",
+            tagline: "Mahasiswa Sistem Informasi yang tertarik pada Machine Learning.",
+            deskripsi: "Saya adalah mahasiswa Sistem Informasi yang memiliki minat besar pada Machine Learning dan pengolahan data. Saya terus belajar mengembangkan model prediktif menggunakan Python dan berbagai library data science untuk membangun solusi berbasis kecerdasan buatan.",
+
+            skills: [
+                { nama: "Python", level: 70},
+                { nama: "Pandas", level: 60 },
+                { nama: "Data Visualization", level: 70 }
+            ],
+
+            experiences: [
+                "Mengikuti Studi Indenpenden Asah Path Machine Learning",
+                "Mengerjakan proyek Analisis dan Visualiasi data penjualan UMKM",
+                "Mengerjakan proyek model Speech to Text untuk HRD"
+            ],
+
+            certificates: [
+                {
+                    title: "Belajar Machine Learning untuk Pemula",
+                    description: "Pelatihan Machine Learning Dicoding.",
+                    image: "assets/BMLP.png",
+                    link: "#"
+                },
+                {
+                    title: "Developer Generative AI",
+                    description: "Pelatihan Generative AI Alibaba Cloud.",
+                    image: "assets/alibaba.jpeg",
+                    link: "#"
+                },
+                {
+                    title: "Memulai Pemrograman dengan Python",
+                    description: "Pelatihan Bahasa Pemrograman Python Dicoding.",
+                    image: "assets/python.png",
+                    link: "#"
+                }
+            ]
+        }
+    },
+    methods: {
+        changeTagline() {
+            this.tagline = "Saya siap menjadi Web Developer Profesional 🚀"
+        }
+    }
+}).mount('#app')
+</script>
+
+</body>
+</html>
